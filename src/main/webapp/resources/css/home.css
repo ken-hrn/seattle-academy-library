@@ -112,7 +112,7 @@ img.book_noimg, img.book_img{
     width: 200px;
     bottom: 10px;
 }
- img.book_img{
+img.book_img{
     height:200px;
     width: 200px;
     left: 20px;
@@ -215,7 +215,7 @@ a:hover, button:hover {
     justify-content: center;
 }
 .button.btn_bulkRegist{
-	    display: flex;
+    display: flex;
     justify-content: center;
 }
 
