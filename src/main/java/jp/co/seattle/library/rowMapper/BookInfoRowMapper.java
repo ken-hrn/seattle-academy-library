@@ -20,6 +20,9 @@ public class BookInfoRowMapper implements RowMapper<BookInfo> {
         bookInfo.setBookId(rs.getInt("id"));
         bookInfo.setTitle(rs.getString("title"));
         bookInfo.setThumbnail(rs.getString("thumbnail_url"));
+        bookInfo.setPublisher(rs.getString("publisher"));
+        bookInfo.setAuthor(rs.getString("author"));
+        // bookInfo.setPublishDate(rs.getString("PublishDate"));
         return bookInfo;
     }
 
