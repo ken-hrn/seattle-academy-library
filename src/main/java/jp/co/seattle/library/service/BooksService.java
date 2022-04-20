@@ -15,7 +15,7 @@ import jp.co.seattle.library.rowMapper.BookInfoRowMapper;
 
 /**
  * 書籍サービス
- * 
+ *
  *  booksテーブルに関する処理を実装する
  */
 @Service
