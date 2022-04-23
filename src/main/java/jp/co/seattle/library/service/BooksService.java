@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import jdk.nashorn.internal.ir.ReturnNode;
 import jp.co.seattle.library.dto.BookDetailsInfo;
 import jp.co.seattle.library.dto.BookInfo;
 import jp.co.seattle.library.rowMapper.BookDetailsInfoRowMapper;
@@ -77,35 +76,32 @@ public class BooksService {
 		jdbcTemplate.update(sql);
 	}
 
-    // 本の削除
+	// 本の削除
 	public void deleteBook(int bookId) {
 
 		String sql = "DELETE FROM books WHERE id = " + bookId;
-		System.out.println(sql);
-
 		jdbcTemplate.update(sql);
 	}
 
-	//ISBN桁数チェック 
+	//ISBN桁数チェック
 	public boolean checkIsbnDigits(String isbn) {
-		System.out.println(isbn);
 		Boolean result = isbn.length() == 13 || isbn.length() == 10 ? true : false;
-		return result;		
+		return result;
 	}
 
 	// publishDateバリデーションチェック
 	public boolean checkDateValidation(String publishDate) {
 		Boolean result = publishDate.length() == 8 ? true : false;
-		return result;		
+		return result;
 	}
-    
-  // booksテーブルの最後のidを取得
-  public BookDetailsInfo getLastRecord() {
-      String sql = "select * from books where id = (select max(id) from books)";
-      
-      BookDetailsInfo bookDetailsInfo = jdbcTemplate.queryForObject(sql, new BookDetailsInfoRowMapper());
-      // Integer bookDetailsInfo = jdbcTemplate.queryForObject(sql, Integer.class);
-      return bookDetailsInfo;
 
-  }
+	// booksテーブルの最後のidを取得
+	public BookDetailsInfo getLastRecord() {
+		String sql = "select * from books where id = (select max(id) from books)";
+
+		BookDetailsInfo bookDetailsInfo = jdbcTemplate.queryForObject(sql, new BookDetailsInfoRowMapper());
+		// Integer bookDetailsInfo = jdbcTemplate.queryForObject(sql, Integer.class);
+		return bookDetailsInfo;
+
+	}
 }

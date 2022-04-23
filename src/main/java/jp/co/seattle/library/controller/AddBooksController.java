@@ -89,44 +89,40 @@ public class AddBooksController {
 				model.addAttribute("bookDetailsInfo", bookInfo);
 				return "addBook";
 			}
-        }
-        
-        // 各バリデーションチェックのメソッド呼び出し
-		Boolean checkIsbnResult = booksService.checkIsbnDigits(isbn);
-		Boolean checkDateResult = booksService.checkDateValidation(publishDate);
-		// String[] errorMessages = new String[2];
-        List<String> errorMessages = new ArrayList<String>();
-        
-        // ISBN桁数チェック
-		if (!(checkIsbnResult == true && isbn.matches("^[0-9]+$"))) {
-			// errorMessages[0] += "ISBNの桁数または半角数字が正しくありません";
-			errorMessages.add("ISBNの桁数または半角数字が正しくありません");
-			System.out.println("ISBNアウト");
-        }
-        
-        // publishDateチェック
-        if (!(checkDateResult == true && publishDate.matches("^[0-9]+$"))) {
-			errorMessages.add("出版日は半角数字のYYYYMMDD形式で入力してください");
-			System.out.println("出版日アウト");
 		}
 
-        // エラーメッセージあればrender
+		// 各バリデーションチェックのメソッド呼び出し
+		Boolean checkIsbnResult = booksService.checkIsbnDigits(isbn);
+		Boolean checkDateResult = booksService.checkDateValidation(publishDate);
+		List<String> errorMessages = new ArrayList<String>();
+
+		// ISBN桁数チェック
+		if (!(checkIsbnResult == true && isbn.matches("^[0-9]+$"))) {
+			errorMessages.add("ISBNの桁数または半角数字が正しくありません");
+		}
+
+		// publishDateチェック
+		if (!(checkDateResult == true && publishDate.matches("^[0-9]+$"))) {
+			errorMessages.add("出版日は半角数字のYYYYMMDD形式で入力してください");
+		}
+
+		// エラーメッセージあればrender
 		if (errorMessages == null || errorMessages.size() == 0) {
-            // 書籍情報を新規登録する
-            booksService.registBook(bookInfo);
-    
-            model.addAttribute("resultMessage", "登録完了");
-    
-            // TODO 登録した書籍の詳細情報を表示するように実装
-            //  詳細画面に遷移する
-            model.addAttribute("bookDetailsInfo", booksService.getLastRecord());
-            return "details";            
-        } else {
+			// 書籍情報を新規登録する
+			booksService.registBook(bookInfo);
+
+			model.addAttribute("resultMessage", "登録完了");
+
+			// TODO 登録した書籍の詳細情報を表示するように実装
+			//  詳細画面に遷移する
+			model.addAttribute("bookDetailsInfo", booksService.getLastRecord());
+			return "details";
+		} else {
 			model.addAttribute("errorMessages", errorMessages);
 			model.addAttribute("bookInfo", bookInfo);
 			System.out.println(errorMessages);
 			return "addBook";
-        }
+		}
 
 	}
 
