@@ -115,12 +115,11 @@ public class AddBooksController {
 
 			// TODO 登録した書籍の詳細情報を表示するように実装
 			//  詳細画面に遷移する
-			model.addAttribute("bookDetailsInfo", booksService.getLastRecord());
+			model.addAttribute("bookDetailsInfo", bookInfo);
 			return "details";
 		} else {
 			model.addAttribute("errorMessages", errorMessages);
 			model.addAttribute("bookInfo", bookInfo);
-			System.out.println(errorMessages);
 			return "addBook";
 		}
 

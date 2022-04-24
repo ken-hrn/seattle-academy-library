@@ -1,5 +1,8 @@
 package jp.co.seattle.library.service;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -91,17 +94,22 @@ public class BooksService {
 
 	// publishDateバリデーションチェック
 	public boolean checkDateValidation(String publishDate) {
-		Boolean result = publishDate.length() == 8 ? true : false;
-		return result;
-	}
-
-	// booksテーブルの最後のidを取得
-	public BookDetailsInfo getLastRecord() {
-		String sql = "select * from books where id = (select max(id) from books)";
-
-		BookDetailsInfo bookDetailsInfo = jdbcTemplate.queryForObject(sql, new BookDetailsInfoRowMapper());
-		// Integer bookDetailsInfo = jdbcTemplate.queryForObject(sql, Integer.class);
-		return bookDetailsInfo;
-
+		Boolean strLength = publishDate.length() == 8 ? true : false;
+		Boolean format;
+		try {
+			DateFormat df = new SimpleDateFormat("yyyyMMdd");
+			df.setLenient(false); // これで厳密にチェックしてくれるようになる
+			String s1 = publishDate;
+			String s2 = df.format(df.parse(s1)); // ←df.parseでParseExceptionがThrowされる
+			format = true;
+		} catch (ParseException p) {
+			p.printStackTrace();
+			format = false;
+		}
+		if (strLength == true && format == true) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
