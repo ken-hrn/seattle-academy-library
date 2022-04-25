@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.sound.sampled.BooleanControl;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +77,6 @@ public class AddBooksController {
 
 		if (!file.isEmpty()) {
 			try {
-				// サムネイル画像をアップロード
 				String fileName = thumbnailService.uploadThumbnail(thumbnail, file);
 				// URLを取得
 				String thumbnailUrl = thumbnailService.getURL(fileName);
@@ -92,9 +93,15 @@ public class AddBooksController {
 		}
 
 		// 各バリデーションチェックのメソッド呼び出し
+		Boolean checkRequired = booksService.checkRequired(bookInfo);
 		Boolean checkIsbnResult = booksService.checkIsbnDigits(isbn);
 		Boolean checkDateResult = booksService.checkDateValidation(publishDate);
 		List<String> errorMessages = new ArrayList<String>();
+
+		// 必須項目チェック
+		if (checkRequired == true) {
+			errorMessages.add("未入力の必須項目があります");
+		}
 
 		// ISBN桁数チェック
 		if (!(checkIsbnResult == true && isbn.matches("^[0-9]+$"))) {

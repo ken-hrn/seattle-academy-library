@@ -86,6 +86,15 @@ public class BooksService {
 		jdbcTemplate.update(sql);
 	}
 
+	// 必須項目チェック
+	public boolean checkRequired(BookDetailsInfo bookInfo) {
+		if (bookInfo.getTitle().isEmpty() || bookInfo.getAuthor().isEmpty() || bookInfo.getPublisher().isEmpty() || bookInfo.getPublishDate().isEmpty()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	//ISBN桁数チェック
 	public boolean checkIsbnDigits(String isbn) {
 		Boolean result = isbn.length() == 13 || isbn.length() == 10 ? true : false;
@@ -96,7 +105,7 @@ public class BooksService {
 	public boolean checkDateValidation(String publishDate) {
 		Boolean strLength = publishDate.length() == 8 ? true : false;
 		Boolean format;
-		
+
 		try {
 			DateFormat df = new SimpleDateFormat("yyyyMMdd");
 			df.setLenient(false); // これで厳密にチェックしてくれるようになる
