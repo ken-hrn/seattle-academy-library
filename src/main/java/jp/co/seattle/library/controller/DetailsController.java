@@ -27,6 +27,7 @@ public class DetailsController {
     /**
      * 詳細画面に遷移する
      * @param locale
+     * 
      * @param bookId
      * @param model
      * @return
@@ -40,7 +41,7 @@ public class DetailsController {
         logger.info("Welcome detailsControler.java! The client locale is {}.", locale);
 
         model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
-
         return "details";
     }
+
 }

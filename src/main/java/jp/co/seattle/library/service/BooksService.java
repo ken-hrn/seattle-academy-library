@@ -59,11 +59,11 @@ public class BooksService {
 		return bookDetailsInfo;
 	}
 
-	/**
+	/**s
 	 * 書籍を登録する
 	 *
 	 * @param bookInfo 書籍情報
-	 */
+	 **/
 	public void registBook(BookDetailsInfo bookInfo) {
 
 		String sql = "INSERT INTO books (title, author,publisher,thumbnail_name,thumbnail_url, publish_date, isbn, introduction, reg_date, upd_date) VALUES ('"
@@ -96,6 +96,7 @@ public class BooksService {
 	public boolean checkDateValidation(String publishDate) {
 		Boolean strLength = publishDate.length() == 8 ? true : false;
 		Boolean format;
+		
 		try {
 			DateFormat df = new SimpleDateFormat("yyyyMMdd");
 			df.setLenient(false); // これで厳密にチェックしてくれるようになる
@@ -106,6 +107,7 @@ public class BooksService {
 			p.printStackTrace();
 			format = false;
 		}
+
 		if (strLength == true && format == true) {
 			return true;
 		} else {

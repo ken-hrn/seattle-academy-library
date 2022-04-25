@@ -36,13 +36,15 @@
             <div class="content_left">
                 <span>書籍の画像</span>
                 <div class="book_thumnail">
-                    <a href="${bookDetailsInfo.thumbnailUrl}" data-lightbox="image-1"> 
-                        <c:if test="${empty bookDetailsInfo.thumbnailUrl}">
-                            <img class="book_noimg" src="resources/img/noImg.png">
-                        </c:if> 
-                        <c:if test="${!empty bookDetailsInfo.thumbnailUrl}">
-                            <img class="book_noimg" src="${bookDetailsInfo.thumbnailUrl}">
-                        </c:if> 
+                    <a href="${bookDetailsInfo.thumbnailUrl}" data-lightbox="image-1">
+                        <c:choose>
+                            <c:when test="${empty bookDetailsInfo.thumbnailUrl or bookDetailsInfo.thumbnailUrl == 'null'}">
+                                <img class="book_noimg" src="resources/img/noImg.png">
+                            </c:when>
+                            <c:otherwise>
+                                <img class="book_noimg" src="${bookDetailsInfo.thumbnailUrl}">
+                            </c:otherwise>
+                        </c:choose>
                         <input type="hidden" name="bookId" value="${bookDetailsInfo.bookId}">
                     </a>
                 </div>
