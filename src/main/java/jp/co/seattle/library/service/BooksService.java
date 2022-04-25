@@ -36,7 +36,7 @@ public class BooksService {
 
 		// TODO 取得したい情報を取得するようにSQLを修正
 		List<BookInfo> getedBookList = jdbcTemplate.query(
-				"select * from books order by title",
+				"select id, title, author, publisher, publish_date, thumbnail_url from books order by title",
 				new BookInfoRowMapper());
 
 		return getedBookList;
@@ -64,7 +64,7 @@ public class BooksService {
 	 *
 	 * @param bookInfo 書籍情報
 	 **/
-	public void registBook(BookDetailsInfo bookInfo) {
+	public int registBook(BookDetailsInfo bookInfo) {
 
 		String sql = "INSERT INTO books (title, author,publisher,thumbnail_name,thumbnail_url, publish_date, isbn, introduction, reg_date, upd_date) VALUES ('"
 				+ bookInfo.getTitle() + "','" + bookInfo.getAuthor() + "','" + bookInfo.getPublisher() + "','"
@@ -74,9 +74,10 @@ public class BooksService {
 				+ bookInfo.getIsbn() + "','"
 				+ bookInfo.getIntroduction() + "',"
 				+ "now(),"
-				+ "now())";
+				+ "now()) RETURNING id";
 
-		jdbcTemplate.update(sql);
+		int bookId = jdbcTemplate.queryForObject(sql, Integer.class);
+		return bookId;
 	}
 
 	// 本の削除
@@ -97,7 +98,7 @@ public class BooksService {
 
 	//ISBN桁数チェック
 	public boolean checkIsbnDigits(String isbn) {
-		Boolean result = isbn.length() == 13 || isbn.length() == 10 ? true : false;
+		Boolean result = isbn.length() == 13 || isbn.length() == 10 || isbn.length() == 0 ? true : false;
 		return result;
 	}
 

@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import javax.sound.sampled.BooleanControl;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -114,15 +113,15 @@ public class AddBooksController {
 		}
 
 		// エラーメッセージあればrender
-		if (errorMessages == null || errorMessages.size() == 0) {
+		if (CollectionUtils.isEmpty(errorMessages)) {
 			// 書籍情報を新規登録する
-			booksService.registBook(bookInfo);
+			int bookId = booksService.registBook(bookInfo);
 
 			model.addAttribute("resultMessage", "登録完了");
 
 			// TODO 登録した書籍の詳細情報を表示するように実装
 			//  詳細画面に遷移する
-			model.addAttribute("bookDetailsInfo", bookInfo);
+			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 			return "details";
 		} else {
 			model.addAttribute("errorMessages", errorMessages);

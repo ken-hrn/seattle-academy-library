@@ -38,7 +38,7 @@
                 <div class="book_thumnail">
                     <a href="${bookDetailsInfo.thumbnailUrl}" data-lightbox="image-1">
                         <c:choose>
-                            <c:when test="${empty bookDetailsInfo.thumbnailUrl or bookDetailsInfo.thumbnailUrl == 'null'}">
+                            <c:when test="${bookDetailsInfo.thumbnailUrl == 'null'}">
                                 <img class="book_noimg" src="resources/img/noImg.png">
                             </c:when>
                             <c:otherwise>
