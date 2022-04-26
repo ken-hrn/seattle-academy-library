@@ -59,10 +59,10 @@ public class BooksService {
 		return bookDetailsInfo;
 	}
 
-	/**s
+	/**
 	 * 書籍を登録する
-	 *
 	 * @param bookInfo 書籍情報
+	 * @return bookId
 	 **/
 	public int registBook(BookDetailsInfo bookInfo) {
 
@@ -80,6 +80,11 @@ public class BooksService {
 		return bookId;
 	}
 
+		/**
+	 * 書籍IDに紐づく書籍情報を削除する
+	 *
+	 * @param bookId 書籍ID
+	 */
 	// 本の削除
 	public void deleteBook(int bookId) {
 
@@ -87,6 +92,12 @@ public class BooksService {
 		jdbcTemplate.update(sql);
 	}
 
+		/**
+	 * 書籍情報を受け取り、入力値があるか検査する
+	 *
+	 * @param bookInfo 書籍情報
+	 * @return 真偽値
+	 */
 	// 必須項目チェック
 	public boolean checkRequired(BookDetailsInfo bookInfo) {
 		if (bookInfo.getTitle().isEmpty() || bookInfo.getAuthor().isEmpty() || bookInfo.getPublisher().isEmpty() || bookInfo.getPublishDate().isEmpty()) {
@@ -96,12 +107,24 @@ public class BooksService {
 		}
 	}
 
+	/**
+	 * isbnを受け取り桁数を検査する
+	 *
+	 * @param isbn isbnの情報
+	 * @return 真偽値
+	 */
 	//ISBN桁数チェック
 	public boolean checkIsbnDigits(String isbn) {
 		Boolean result = isbn.length() == 13 || isbn.length() == 10 || isbn.length() == 0 ? true : false;
 		return result;
 	}
 
+	/**
+	 * publishDateを受け取り桁数と日付を検査する
+	 *
+	 * @param isbn isbnの情報
+	 * @return 真偽値
+	 */
 	// publishDateバリデーションチェック
 	public boolean checkDateValidation(String publishDate) {
 		Boolean strLength = publishDate.length() == 8 ? true : false;
