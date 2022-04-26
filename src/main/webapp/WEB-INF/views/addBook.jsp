@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -40,6 +41,13 @@
                     <input type="file" accept="image/*" name="thumbnail" id="thumbnail">
                 </div>
                 <div class="content_right">
+                    <c:if test="${!empty errorMessages}">
+                        <ul class="error">
+                            <c:forEach var="errorMessage" items="${errorMessages}">
+                                <li>${errorMessage}</li>
+                            </c:forEach>
+                        </ul>
+                    </c:if>
                     <div>
                         <span>書籍名</span><span class="care care2">必須</span>
                         <c:if test="${!empty bookInfo}">
@@ -64,10 +72,37 @@
                             <input type="text" name="publisher" value="${bookInfo.publisher}">
                         </c:if>
                         <c:if test="${empty bookInfo}">
+                        
                             <input type="text" name="publisher">
                         </c:if>
                     </div>
-                    <input type="hidden" id="bookId" name="bookId" value="${bookInfo.bookId}">
+                    <div>
+                        <span>出版日</span><span class="care care2">必須</span>
+                        <c:if test="${!empty bookInfo}">
+                            <input type="text" name="publishDate" value="${bookInfo.publishDate}">
+                        </c:if>
+                        <c:if test="${empty bookInfo}">
+                            <input type="text" placeholder="YYYYMMDD" name="publishDate">
+                        </c:if>
+                    </div>
+                    <div>
+                        <span>ISBN</span><span class="care care1">任意</span>
+                        <c:if test="${!empty bookInfo}">
+                            <input type="text" name="isbn" value="${bookInfo.isbn}">
+                        </c:if>
+                        <c:if test="${empty bookInfo}">
+                            <input type="text" name="isbn">
+                        </c:if>
+                    </div>
+                    <div>
+                        <span>説明</span><span class="care care1">任意</span>
+                        <c:if test="${!empty bookInfo}">
+                            <input type="text" name="introduction" value="${bookInfo.introduction}">
+                        </c:if>
+                        <c:if test="${empty bookInfo}">
+                            <input type="text" name="introduction">
+                        </c:if>
+                    </div>
                 </div>
             </div>
             <div class="addBookBtn_box">

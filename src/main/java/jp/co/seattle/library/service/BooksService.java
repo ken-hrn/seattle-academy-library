@@ -1,5 +1,8 @@
 package jp.co.seattle.library.service;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -20,56 +23,128 @@ import jp.co.seattle.library.rowMapper.BookInfoRowMapper;
  */
 @Service
 public class BooksService {
-    final static Logger logger = LoggerFactory.getLogger(BooksService.class);
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+	final static Logger logger = LoggerFactory.getLogger(BooksService.class);
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 
-    /**
-     * 書籍リストを取得する
-     *
-     * @return 書籍リスト
-     */
-    public List<BookInfo> getBookList() {
+	/**
+	 * 書籍リストを取得する
+	 *
+	 * @return 書籍リスト
+	 */
+	public List<BookInfo> getBookList() {
 
-        // TODO 取得したい情報を取得するようにSQLを修正
-        List<BookInfo> getedBookList = jdbcTemplate.query(
-                "select title, author, publisher, publish_date, thumbnail_url from books order by title",
-                new BookInfoRowMapper());
+		// TODO 取得したい情報を取得するようにSQLを修正
+		List<BookInfo> getedBookList = jdbcTemplate.query(
+				"select id, title, author, publisher, publish_date, thumbnail_url from books order by title",
+				new BookInfoRowMapper());
 
-        return getedBookList;
-    }
+		return getedBookList;
+	}
 
-    /**
-     * 書籍IDに紐づく書籍詳細情報を取得する
-     *
-     * @param bookId 書籍ID
-     * @return 書籍情報
-     */
-    public BookDetailsInfo getBookInfo(int bookId) {
+	/**
+	 * 書籍IDに紐づく書籍詳細情報を取得する
+	 *
+	 * @param bookId 書籍ID
+	 * @return 書籍情報
+	 */
+	public BookDetailsInfo getBookInfo(int bookId) {
 
-        // JSPに渡すデータを設定する
-        String sql = "SELECT * FROM books where id ="
-                + bookId;
+		// JSPに渡すデータを設定する
+		String sql = "SELECT * FROM books where id ="
+				+ bookId;
 
-        BookDetailsInfo bookDetailsInfo = jdbcTemplate.queryForObject(sql, new BookDetailsInfoRowMapper());
+		BookDetailsInfo bookDetailsInfo = jdbcTemplate.queryForObject(sql, new BookDetailsInfoRowMapper());
 
-        return bookDetailsInfo;
-    }
+		return bookDetailsInfo;
+	}
 
-    /**
-     * 書籍を登録する
-     *
-     * @param bookInfo 書籍情報
-     */
-    public void registBook(BookDetailsInfo bookInfo) {
+	/**
+	 * 書籍を登録する
+	 * @param bookInfo 書籍情報
+	 * @return bookId
+	 **/
+	public int registBook(BookDetailsInfo bookInfo) {
 
-        String sql = "INSERT INTO books (title, author,publisher,thumbnail_name,thumbnail_url,reg_date,upd_date) VALUES ('"
-                + bookInfo.getTitle() + "','" + bookInfo.getAuthor() + "','" + bookInfo.getPublisher() + "','"
-                + bookInfo.getThumbnailName() + "','"
-                + bookInfo.getThumbnailUrl() + "',"
-                + "now(),"
-                + "now())";
+		String sql = "INSERT INTO books (title, author,publisher,thumbnail_name,thumbnail_url, publish_date, isbn, introduction, reg_date, upd_date) VALUES ('"
+				+ bookInfo.getTitle() + "','" + bookInfo.getAuthor() + "','" + bookInfo.getPublisher() + "','"
+				+ bookInfo.getThumbnailName() + "','"
+				+ bookInfo.getThumbnailUrl() + "','"
+				+ bookInfo.getPublishDate() + "','"
+				+ bookInfo.getIsbn() + "','"
+				+ bookInfo.getIntroduction() + "',"
+				+ "now(),"
+				+ "now()) RETURNING id";
 
-        jdbcTemplate.update(sql);
-    }
+		int bookId = jdbcTemplate.queryForObject(sql, Integer.class);
+		return bookId;
+	}
+
+		/**
+	 * 書籍IDに紐づく書籍情報を削除する
+	 *
+	 * @param bookId 書籍ID
+	 */
+	// 本の削除
+	public void deleteBook(int bookId) {
+
+		String sql = "DELETE FROM books WHERE id = " + bookId;
+		jdbcTemplate.update(sql);
+	}
+
+		/**
+	 * 書籍情報を受け取り、入力値があるか検査する
+	 *
+	 * @param bookInfo 書籍情報
+	 * @return 真偽値
+	 */
+	// 必須項目チェック
+	public boolean checkRequired(BookDetailsInfo bookInfo) {
+		if (bookInfo.getTitle().isEmpty() || bookInfo.getAuthor().isEmpty() || bookInfo.getPublisher().isEmpty() || bookInfo.getPublishDate().isEmpty()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * isbnを受け取り桁数を検査する
+	 *
+	 * @param isbn isbnの情報
+	 * @return 真偽値
+	 */
+	//ISBN桁数チェック
+	public boolean checkIsbnDigits(String isbn) {
+		Boolean result = isbn.length() == 13 || isbn.length() == 10 || isbn.length() == 0 ? true : false;
+		return result;
+	}
+
+	/**
+	 * publishDateを受け取り桁数と日付を検査する
+	 *
+	 * @param isbn isbnの情報
+	 * @return 真偽値
+	 */
+	// publishDateバリデーションチェック
+	public boolean checkDateValidation(String publishDate) {
+		Boolean strLength = publishDate.length() == 8 ? true : false;
+		Boolean format;
+
+		try {
+			DateFormat df = new SimpleDateFormat("yyyyMMdd");
+			df.setLenient(false); // これで厳密にチェックしてくれるようになる
+			String s1 = publishDate;
+			String s2 = df.format(df.parse(s1)); // ←df.parseでParseExceptionがThrowされる
+			format = true;
+		} catch (ParseException p) {
+			p.printStackTrace();
+			format = false;
+		}
+
+		if (strLength == true && format == true) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

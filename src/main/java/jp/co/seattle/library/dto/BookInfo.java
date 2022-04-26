@@ -28,7 +28,7 @@ public class BookInfo {
     }
 
     // コンストラクタ
-    public BookInfo(int bookId, String title, String author, String publisher, String publishDate, String thumbnail) {
+    public BookInfo(int bookId, String title, String author, String publisher, String publishDate, String thumbnail, String isbn, String introduction) {
         this.bookId = bookId;
         this.title = title;
         this.author = author;
