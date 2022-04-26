@@ -53,13 +53,12 @@ public class BooksService {
 		// JSPに渡すデータを設定する
 		String sql = "SELECT * FROM books where id ="
 				+ bookId;
-
+		
 		BookDetailsInfo bookDetailsInfo = jdbcTemplate.queryForObject(sql, new BookDetailsInfoRowMapper());
-
 		return bookDetailsInfo;
 	}
 
-	/**s
+	/**
 	 * 書籍を登録する
 	 *
 	 * @param bookInfo 書籍情報
@@ -78,6 +77,27 @@ public class BooksService {
 
 		int bookId = jdbcTemplate.queryForObject(sql, Integer.class);
 		return bookId;
+	}
+
+
+	/**
+	 * 書籍を更新する
+	 *
+	 * @param bookInfo 書籍情報
+	 * @param id 書籍id
+	 **/
+	public void updateBook(BookDetailsInfo bookInfo, int id) {
+
+		String sql = "update books set title = " + "'" + bookInfo.getTitle() + "', " 
+								+ "author = '"  + bookInfo.getAuthor() + "', " 
+								+ "publisher = '"  + bookInfo.getPublisher() + "', " 
+								+ "thumbnail_name = '"  + bookInfo.getThumbnailName() + "', " 
+								+ "thumbnail_url = '"  + bookInfo.getThumbnailUrl() + "', " 
+								+ "publish_date = '"  + bookInfo.getPublishDate() + "', " 
+								+ "isbn = '"  + bookInfo.getIsbn() + "', " 
+								+ "introduction = '"  + bookInfo.getIntroduction() + "' where id = " + id;
+
+		jdbcTemplate.update(sql);
 	}
 
 	// 本の削除
