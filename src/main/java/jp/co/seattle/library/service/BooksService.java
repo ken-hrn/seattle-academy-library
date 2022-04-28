@@ -79,6 +79,26 @@ public class BooksService {
 		return bookId;
 	}
 
+	/**
+ * 書籍を一括登録する
+ *
+ * @param bookInfo 書籍情報
+ **/
+	public void registCsvBook(BookDetailsInfo bookInfo) {
+
+		String sql = "INSERT INTO books (title, author,publisher, thumbnail_url, publish_date, isbn, reg_date, upd_date) VALUES ('"
+				+ bookInfo.getTitle() + "','" + bookInfo.getAuthor() + "','" + bookInfo.getPublisher() + "','"
+				+ bookInfo.getThumbnailUrl() + "','"
+				+ bookInfo.getPublishDate() + "','"
+				+ bookInfo.getIsbn() + "',"
+				+ "now(),"
+				+ "now())";
+
+		System.out.println(sql);
+
+		jdbcTemplate.update(sql);
+	}
+
 
 	/**
 	 * 書籍を更新する
