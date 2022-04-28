@@ -1,10 +1,20 @@
 .addCsv_box {
+  margin: 0 auto;
+  width: 600px;
+}
+
+.addCsv_box h2 {
   text-align: center;
 }
 
 .attention_text {
   margin: 20px 0 20px 0;
   color: #FF9933;
+}
+
+.upload_btn {
+  display: flex;
+  justify-content: center;
 }
 
 .btn_addCsv {

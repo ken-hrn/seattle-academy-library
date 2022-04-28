@@ -38,7 +38,9 @@
                     <p class="hoge">「書籍名、著者名、出版社、ISBN」の形式で記載してください。</p>
                     <p>＊サムネイル画像は一括登録できません。編集画面で1冊単位で登録してください。</p>
                 </div>
-                <input type="file" name="uploadFile">
+                <div class="upload_btn">
+                    <input type="file" name="uploadFile">
+                </div>
             </div>
             <div class="addBookBtn_box">
                 <button type="submit" id="add-btn" class="btn_addCsv">一括登録</button>

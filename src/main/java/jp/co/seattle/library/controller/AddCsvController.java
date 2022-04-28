@@ -75,7 +75,6 @@ public class AddCsvController {
 				bookInfo.setIsbn(inputValues[4]);
 				bookInfo.setThumbnailUrl("null");
 				
-				System.out.println(Arrays.toString(inputValues));
 				booksService.registCsvBook(bookInfo);
 				
 			}

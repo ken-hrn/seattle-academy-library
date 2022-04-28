@@ -94,8 +94,6 @@ public class BooksService {
 				+ "now(),"
 				+ "now())";
 
-		System.out.println(sql);
-
 		jdbcTemplate.update(sql);
 	}
 
