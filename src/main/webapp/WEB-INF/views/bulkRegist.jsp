@@ -12,7 +12,7 @@
 <link href="<c:url value="/resources/css/default.css" />" rel="stylesheet" type="text/css">
 <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 <link href="<c:url value="/resources/css/home.css" />" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="resources/css/addCsv.css">
+<link rel="stylesheet" href="resources/css/bulk.css">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="resources/js/lightbox.js" /></script>
 </head>
@@ -30,12 +30,19 @@
         </div>
     </header>
     <main>
-        <form action="<%=request.getContextPath()%>/insertCsv" method="post" enctype="multipart/form-data" id="data_upload_form">
+        <form action="<%=request.getContextPath()%>/bulkRegist" method="post" enctype="multipart/form-data" id="data_upload_form">
             <h1>書籍の追加</h1>
-            <div class="addCsv_box">
+            <div class="bull_box">
                 <h2>CSVファイルをアップロードすることで書籍を一括で登録できます。</h2>
+                <c:if test="${!empty errorMessages}">
+                    <ul class="error">
+                        <c:forEach var="errorMessage" items="${errorMessages}">
+                            <li>${errorMessage}</li>
+                        </c:forEach>
+                    </ul>
+                </c:if>
                 <div class="attention_text">
-                    <p class="hoge">「書籍名、著者名、出版社、ISBN」の形式で記載してください。</p>
+                    <p>「書籍名、著者名、出版社、ISBN」の形式で記載してください。</p>
                     <p>＊サムネイル画像は一括登録できません。編集画面で1冊単位で登録してください。</p>
                 </div>
                 <div class="upload_btn">
@@ -43,7 +50,7 @@
                 </div>
             </div>
             <div class="addBookBtn_box">
-                <button type="submit" id="add-btn" class="btn_addCsv">一括登録</button>
+                <button type="submit" id="add-btn" class="btn_bulk">一括登録</button>
             </div>
         </form>
     </main>
