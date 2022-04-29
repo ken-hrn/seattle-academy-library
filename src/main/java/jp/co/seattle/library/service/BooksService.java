@@ -97,7 +97,6 @@ public class BooksService {
 		jdbcTemplate.update(sql);
 	}
 
-
 	/**
 	 * 書籍を更新する
 	 *
