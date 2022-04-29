@@ -44,10 +44,10 @@ public class BulkRegistController {
 	* @return 遷移先画面
 	 */
 
-	@RequestMapping(value = "/bulk", method = RequestMethod.GET) //value＝actionで指定したパラメータ
+	@RequestMapping(value = "/bulkRegist", method = RequestMethod.GET) //value＝actionで指定したパラメータ
 	//RequestParamでname属性を取得
 	public String bulk(Model model) {
-		return "bulk";
+		return "bulkRegist";
 	}
 
 	/**
@@ -68,6 +68,8 @@ public class BulkRegistController {
 
 			String inputValue;
 			int lineCount = 0;
+			List<String> errorMessages = new ArrayList<String>();
+
 			while ((inputValue = br.readLine()) != null) {
 				String[] inputValues = inputValue.split(",");
 
@@ -79,33 +81,29 @@ public class BulkRegistController {
 				bookInfo.setIsbn(inputValues[4]);
 				bookInfo.setThumbnailUrl("null");
 
-				// 各バリデーションチェックのメソッド呼び出し
-				Boolean checkRequired = booksService.checkRequired(bookInfo);
-				Boolean checkDateResult = booksService.checkDateValidation(bookInfo.getPublishDate());
-				Boolean checkIsbnResult = booksService.checkIsbnDigits(bookInfo.getIsbn());
-
-				List<String> errorMessages = new ArrayList<String>();
-
+				// 行数カウントインクリメント
 				lineCount++;
 
-				if (checkRequired == true || (!(checkIsbnResult == true) && bookInfo.getIsbn().matches("^[0-9]+$"))
-						|| !(checkDateResult == true && bookInfo.getPublishDate().matches("^[0-9]+$"))) {
+				Boolean resultValidation = booksService.checkBulkValidation(bookInfo);
+				if (resultValidation == true) {
 					errorMessages.add(lineCount + "行目でバリデーションエラーが発生しました");
 				}
-				// エラーメッセージあればrender
-				if (CollectionUtils.isEmpty(errorMessages)) {
-					// 書籍情報を新規登録する
-					booksService.registCsvBook(bookInfo);
-					return "redirect:home";
-				} else {
-					model.addAttribute("errorMessages", errorMessages);
-					return "bulkRegist";
-				}
+
+			}	
+			// エラーメッセージあればrender
+			if (CollectionUtils.isEmpty(errorMessages)) {
+				return "redirect:home";
+			} else {
+				model.addAttribute("errorMessages", errorMessages);
+				return "bulkRegist";
 			}
-			return "bulkRegist";
 		} catch (Exception e) {
-			throw new RuntimeException("ファイルが読み込めません", e);
+
+			List<String> errorMessages = new ArrayList<String>();
+			errorMessages.add("ファイルが読み込めません");
+			model.addAttribute("errorMessages", errorMessages);
 			return "bulkRegist";
+
 		}
 	}
 }

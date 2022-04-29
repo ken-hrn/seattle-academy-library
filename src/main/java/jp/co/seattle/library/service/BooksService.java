@@ -162,4 +162,16 @@ public class BooksService {
 			return false;
 		}
 	}
+
+	// 一括登録バリデーションチェック
+	public boolean checkBulkValidation(BookDetailsInfo bookInfo) {
+		if  (
+					checkRequired(bookInfo) == true || (checkIsbnDigits(bookInfo.getIsbn()) == false && bookInfo.getIsbn().matches("^[0-9]+$")) || 
+					!(checkDateValidation(bookInfo.getPublishDate()) == true && bookInfo.getPublishDate().matches("^[0-9]+$"))
+				) {
+					return true;
+		} else {
+			return false;
+		}
+	}
 }
