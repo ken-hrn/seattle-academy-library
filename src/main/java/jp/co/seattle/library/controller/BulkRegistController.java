@@ -87,7 +87,9 @@ public class BulkRegistController {
 				Boolean resultValidation = booksService.checkBulkValidation(bookInfo);
 				if (resultValidation == true) {
 					errorMessages.add(lineCount + "行目でバリデーションエラーが発生しました");
-				}
+				} else {
+					booksService.bulkRegist(bookInfo);
+				}	
 
 			}	
 			// エラーメッセージあればrender

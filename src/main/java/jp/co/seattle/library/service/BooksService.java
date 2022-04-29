@@ -84,7 +84,7 @@ public class BooksService {
  *
  * @param bookInfo 書籍情報
  **/
-	public void registCsvBook(BookDetailsInfo bookInfo) {
+	public void bulkRegist(BookDetailsInfo bookInfo) {
 
 		String sql = "INSERT INTO books (title, author,publisher, thumbnail_url, publish_date, isbn, reg_date, upd_date) VALUES ('"
 				+ bookInfo.getTitle() + "','" + bookInfo.getAuthor() + "','" + bookInfo.getPublisher() + "','"
