@@ -57,9 +57,9 @@ public class BulkRegistController {
 	 * @param author 著者名
 	 * @param publisher 出版社
 	 * @param file サムネイルファイル
-	* @param model モデル
-	* @return 遷移先画面
-	 */
+	 * @param model モデル
+	 * @return 遷移先画面
+	 **/
 	@Transactional
 	@RequestMapping(value = "/bulkRegist", method = RequestMethod.POST, produces = "text/plain;charset=utf-8")
 	public String uploadFile(@RequestParam("uploadFile") MultipartFile uploadFile, Model model) {
@@ -69,6 +69,7 @@ public class BulkRegistController {
 			String inputValue;
 			int lineCount = 0;
 			List<String> errorMessages = new ArrayList<String>();
+			List<BookDetailsInfo> bookLists = new ArrayList<BookDetailsInfo>();
 
 			while ((inputValue = br.readLine()) != null) {
 				String[] inputValues = inputValue.split(",");
@@ -88,12 +89,13 @@ public class BulkRegistController {
 				if (resultValidation == true) {
 					errorMessages.add(lineCount + "行目でバリデーションエラーが発生しました");
 				} else {
-					booksService.bulkRegist(bookInfo);
+					bookLists.add(bookInfo);
 				}	
 
 			}	
 			// エラーメッセージあればrender
 			if (CollectionUtils.isEmpty(errorMessages)) {
+				bookLists.forEach(bookList -> booksService.bulkRegist(bookList));
 				return "redirect:home";
 			} else {
 				model.addAttribute("errorMessages", errorMessages);
