@@ -45,7 +45,7 @@ public class BulkRegistController {
 	 **/
 
 	@RequestMapping(value = "/bulkRegist", method = RequestMethod.GET) //value＝actionで指定したパラメータ
-	
+
 	public String bulk(Model model) {
 		return "bulkRegist";
 	}
@@ -68,14 +68,18 @@ public class BulkRegistController {
 			List<BookDetailsInfo> bookLists = new ArrayList<BookDetailsInfo>();
 
 			while ((inputValue = br.readLine()) != null) {
-				String[] inputValues = inputValue.split(",");
+				String[] inputValues = inputValue.split(",", -1);
 
 				BookDetailsInfo bookInfo = new BookDetailsInfo();
 				bookInfo.setTitle(inputValues[0]);
 				bookInfo.setAuthor(inputValues[1]);
 				bookInfo.setPublisher(inputValues[2]);
 				bookInfo.setPublishDate(inputValues[3]);
-				bookInfo.setIsbn(inputValues[4]);
+				if (inputValues[4].isEmpty()) {
+					bookInfo.setIsbn("null");
+				} else {
+					bookInfo.setIsbn(inputValues[4]);
+				}
 				bookInfo.setThumbnailUrl("null");
 
 				// 行数カウントインクリメント
