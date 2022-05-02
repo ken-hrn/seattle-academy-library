@@ -40,23 +40,19 @@ public class BulkRegistController {
 	 * 書籍情報を登録する
 	 * @param locale ロケール情報
 	 * @param bookId bookId
-	* @param model モデル
-	* @return 遷移先画面
-	 */
+	 * @param model モデル
+	 * * @return 遷移先画面
+	 **/
 
 	@RequestMapping(value = "/bulkRegist", method = RequestMethod.GET) //value＝actionで指定したパラメータ
-	//RequestParamでname属性を取得
+	
 	public String bulk(Model model) {
 		return "bulkRegist";
 	}
 
 	/**
 	 * 書籍情報を登録する(CSV一括登録)
-	 * @param locale ロケール情報
-	 * @param title 書籍名
-	 * @param author 著者名
-	 * @param publisher 出版社
-	 * @param file サムネイルファイル
+	 * @param uploadFile CSVファイル
 	 * @param model モデル
 	 * @return 遷移先画面
 	 **/

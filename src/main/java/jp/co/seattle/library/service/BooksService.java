@@ -80,10 +80,9 @@ public class BooksService {
 	}
 
 	/**
- * 書籍を一括登録する
- *
- * @param bookInfo 書籍情報
- **/
+	* 書籍を一括登録する
+	* @param bookInfo 書籍情報
+	**/
 	public void bulkRegist(BookDetailsInfo bookInfo) {
 
 		String sql = "INSERT INTO books (title, author,publisher, thumbnail_url, publish_date, isbn, reg_date, upd_date) VALUES ('"
@@ -103,7 +102,7 @@ public class BooksService {
 	 *
 	 * @param bookInfo 書籍情報
 	 * @param id 書籍id
-	 **/
+	**/
 	public void updateBook(BookDetailsInfo bookInfo, int id) {
 
 		String sql = "update books set title = " + "'" + bookInfo.getTitle() + "', " 
@@ -118,11 +117,11 @@ public class BooksService {
 		jdbcTemplate.update(sql);
 	}
 
-		/**
-	 * 書籍IDに紐づく書籍情報を削除する
-	 *
-	 * @param bookId 書籍ID
-	 */
+	/**
+	* 書籍IDに紐づく書籍情報を削除する
+	*
+	* @param bookId 書籍ID
+	*/
 	// 本の削除
 	public void deleteBook(int bookId) {
 
