@@ -109,6 +109,7 @@ input {
 }
 img.book_noimg, img.book_img{
     height:200px;
+
     width: 200px;
     bottom: 10px;
 }
@@ -140,7 +141,7 @@ img.book_img{
     font-size: 12px;
 }
 
-a.btn_add_book,a.btn_bulk_book, button.btn_addBook,button.btn_editBook, button.btn_deleteBook,button.btn_rentBook,button.btn_returnBook,button.btn_bulkRegist {
+a.btn_add_book,a.btn_bulk_book, a.btn_bulkRegist, button.btn_addBook,button.btn_editBook, button.btn_deleteBook,button.btn_rentBook,button.btn_returnBook,button.btn_bulkRegist {
     display: inline-block;
     font-size: 16px;
     font-weight: bold;
@@ -156,6 +157,9 @@ a.btn_add_book,a.btn_bulk_book, button.btn_addBook,button.btn_editBook, button.b
 }
 a.btn_bulk_book{
 	background-color: #66cdaa;
+}
+a.btn_bulkRegist{
+	background-color: #FF9933;
 }
 button.btn_editBook{
     background-color: #9ec34b;
