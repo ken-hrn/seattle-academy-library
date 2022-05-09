@@ -56,7 +56,7 @@ public class RentBooksService {
   }
 
   /**
-	 * 貸出管理テーブルに本のidを登録する
+	 * 貸出管理テーブルの本の情報を削除する
 	 * @param bookId
 	 * @return 書籍id
 	 */

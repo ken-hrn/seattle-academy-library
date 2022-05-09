@@ -29,7 +29,7 @@ public class ReturnBooksController {
 	private BooksService booksService;
 
 	/**
-	 * 対象書籍を削除する
+	 * 対象書籍を返却する
 	 *
 	 * @param locale ロケール情報
 	 * @param bookId 書籍ID
