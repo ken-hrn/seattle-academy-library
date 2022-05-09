@@ -16,7 +16,7 @@ import jp.co.seattle.library.service.BooksService;
 import jp.co.seattle.library.service.RentBooksService;
 
 /**
- * 削除コントローラー
+ *  貸出管理コントローラー
  */
 
 @Controller //APIの入り口

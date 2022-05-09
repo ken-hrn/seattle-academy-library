@@ -17,20 +17,21 @@ import jp.co.seattle.library.rowMapper.BookDetailsInfoRowMapper;
 import jp.co.seattle.library.rowMapper.BookInfoRowMapper;
 
 /**
- * 書籍サービス
+ * 貸出管理サービス
  *
- *  booksテーブルに関する処理を実装する
+ * rending_managesテーブルに関する処理を実装する
  */
 @Service
 public class RentBooksService {
-	final static Logger logger = LoggerFactory.getLogger(RentBooksService.class);
+  final static Logger logger = LoggerFactory.getLogger(RentBooksService.class);
+  
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
 	/**
-	 * 書籍リストを取得する
-	 *
-	 * @return 書籍リスト
+	 * 貸出管理の本の情報を取得する
+	 * @param bookId
+	 * @return 書籍id
 	 */
   public int getRentBookInfo(Integer bookId) {
     String sql = "SELECT COUNT(*) FROM rending_manages where book_id =" + bookId;
@@ -39,6 +40,11 @@ public class RentBooksService {
   }
 
 
+	/**
+	 * 貸出管理テーブルに本のidを登録する
+	 * @param bookId
+	 * @return 書籍id
+	 */
 	public void registBook(Integer bookId) {
 
 		String sql = "INSERT INTO rending_manages (book_id, reg_date, upd_date) VALUES ('"
