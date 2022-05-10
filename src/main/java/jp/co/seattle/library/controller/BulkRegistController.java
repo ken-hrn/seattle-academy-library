@@ -1,7 +1,6 @@
 package jp.co.seattle.library.controller;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -67,32 +66,40 @@ public class BulkRegistController {
 			List<String> errorMessages = new ArrayList<String>();
 			List<BookDetailsInfo> bookLists = new ArrayList<BookDetailsInfo>();
 
+			System.out.println(uploadFile.getOriginalFilename());
+
+			if (uploadFile.getOriginalFilename().equals("")) {
+				errorMessages.add("ファイルが選択されていません");
+			} else if (!br.ready()){
+				errorMessages.add("書籍情報がありません");
+			}
+
 			while ((inputValue = br.readLine()) != null) {
 				String[] inputValues = inputValue.split(",", -1);
 
-				BookDetailsInfo bookInfo = new BookDetailsInfo();
-				bookInfo.setTitle(inputValues[0]);
-				bookInfo.setAuthor(inputValues[1]);
-				bookInfo.setPublisher(inputValues[2]);
-				bookInfo.setPublishDate(inputValues[3]);
 				if (inputValues[4].isEmpty()) {
 					bookInfo.setIsbn("null");
 				} else {
 					bookInfo.setIsbn(inputValues[4]);
 				}
 				bookInfo.setThumbnailUrl("null");
-
+				
 				// 行数カウントインクリメント
 				lineCount++;
-
+				
 				Boolean resultValidation = booksService.checkBulkValidation(bookInfo);
 				if (resultValidation == true) {
 					errorMessages.add(lineCount + "行目でバリデーションエラーが発生しました");
 				} else {
+					BookDetailsInfo bookInfo = new BookDetailsInfo();
+					bookInfo.setTitle(inputValues[0]);
+					bookInfo.setAuthor(inputValues[1]);
+					bookInfo.setPublisher(inputValues[2]);
+					bookInfo.setPublishDate(inputValues[3]);
 					bookLists.add(bookInfo);
-				}	
+				}
 
-			}	
+			}
 			// エラーメッセージあればrender
 			if (CollectionUtils.isEmpty(errorMessages)) {
 				bookLists.forEach(bookList -> booksService.bulkRegist(bookList));
