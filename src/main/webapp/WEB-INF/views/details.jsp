@@ -48,6 +48,7 @@
                         <input type="hidden" name="bookId" value="${bookDetailsInfo.bookId}">
                     </a>
                 </div>
+                <div>${rentStatus}</div>
                 <c:if test="${!empty rentErrorMessage}">
                     <div class="error">
                         ${rentErrorMessage}
