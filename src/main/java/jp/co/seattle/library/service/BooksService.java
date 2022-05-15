@@ -197,9 +197,16 @@ public class BooksService {
 		}
 	}
 
-	public List<BookInfo> getSearchBookList(String searchWord) {
-		List<BookInfo> getedSearchBooks = jdbcTemplate.query(
+	public List<BookInfo> getSearchBookList(String searchCriteria, String searchWord) {
+		if (searchCriteria.equals("perfectMatching")) {
+			List<BookInfo> getedSearchBooks = jdbcTemplate.query(
+				"SELECT * FROM books WHERE title LIKE '" + searchWord + "'", new BookInfoRowMapper());
+			return getedSearchBooks;
+		} else {
+			System.out.println("部分一致");
+			List<BookInfo> getedSearchBooks = jdbcTemplate.query(
 				"SELECT * FROM books WHERE title LIKE '%" + searchWord + "%'", new BookInfoRowMapper());
-		return getedSearchBooks;
+			return getedSearchBooks;
+		}
 	}
 }

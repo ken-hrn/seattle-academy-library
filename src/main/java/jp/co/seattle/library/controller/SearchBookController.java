@@ -24,7 +24,7 @@ public class SearchBookController {
 	final static Logger logger = LoggerFactory.getLogger(SearchBookController.class);
 
 	@Autowired
-  private RentBooksService rentBooksService;
+	private RentBooksService rentBooksService;
 	@Autowired
 	private BooksService booksService;
 
@@ -41,11 +41,11 @@ public class SearchBookController {
 	public String searchBook(
 			Locale locale,
 			@RequestParam("searchWord") String searchWord,
+			@RequestParam("searchCriteria") String searchCriteria,
 			Model model) {
-    logger.info("Welcome search! The client locale is {}.", locale);
-
-    model.addAttribute("bookList", booksService.getSearchBookList(searchWord));
-    return "home";
+		logger.info("Welcome search! The client locale is {}.", locale);
+		model.addAttribute("bookList", booksService.getSearchBookList(searchCriteria, searchWord));
+		return "home";
 	}
 
 }
