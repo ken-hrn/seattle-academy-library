@@ -215,6 +215,7 @@ header > .right {
 }
 header > .right > ul{
     display:flex;
+    align-items: center;
 }
 header > .right > ul > li{
     margin-right: 15px;
