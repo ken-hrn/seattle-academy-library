@@ -99,7 +99,6 @@ public class BooksService {
 		jdbcTemplate.update(sql);
 	}
 
-
 	/**
 	 * 書籍を更新する
 	 *
@@ -108,14 +107,14 @@ public class BooksService {
 	**/
 	public void updateBook(BookDetailsInfo bookInfo, int id) {
 
-		String sql = "update books set title = " + "'" + bookInfo.getTitle() + "', " 
-								+ "author = '"  + bookInfo.getAuthor() + "', " 
-								+ "publisher = '"  + bookInfo.getPublisher() + "', " 
-								+ "thumbnail_name = '"  + bookInfo.getThumbnailName() + "', " 
-								+ "thumbnail_url = '"  + bookInfo.getThumbnailUrl() + "', " 
-								+ "publish_date = '"  + bookInfo.getPublishDate() + "', " 
-								+ "isbn = '"  + bookInfo.getIsbn() + "', " 
-								+ "introduction = '"  + bookInfo.getIntroduction() + "' where id = " + id;
+		String sql = "update books set title = " + "'" + bookInfo.getTitle() + "', "
+				+ "author = '" + bookInfo.getAuthor() + "', "
+				+ "publisher = '" + bookInfo.getPublisher() + "', "
+				+ "thumbnail_name = '" + bookInfo.getThumbnailName() + "', "
+				+ "thumbnail_url = '" + bookInfo.getThumbnailUrl() + "', "
+				+ "publish_date = '" + bookInfo.getPublishDate() + "', "
+				+ "isbn = '" + bookInfo.getIsbn() + "', "
+				+ "introduction = '" + bookInfo.getIntroduction() + "' where id = " + id;
 
 		jdbcTemplate.update(sql);
 	}
@@ -132,15 +131,16 @@ public class BooksService {
 		jdbcTemplate.update(sql);
 	}
 
-		/**
-	 * 書籍情報を受け取り、入力値があるか検査する
-	 *
-	 * @param bookInfo 書籍情報
-	 * @return 真偽値
-	 */
+	/**
+	* 書籍情報を受け取り、入力値があるか検査する
+	*
+	* @param bookInfo 書籍情報
+	* @return 真偽値
+	*/
 	// 必須項目チェック
 	public boolean checkRequired(BookDetailsInfo bookInfo) {
-		if (bookInfo.getTitle().isEmpty() || bookInfo.getAuthor().isEmpty() || bookInfo.getPublisher().isEmpty() || bookInfo.getPublishDate().isEmpty()) {
+		if (bookInfo.getTitle().isEmpty() || bookInfo.getAuthor().isEmpty() || bookInfo.getPublisher().isEmpty()
+				|| bookInfo.getPublishDate().isEmpty()) {
 			return true;
 		} else {
 			return false;
@@ -190,13 +190,19 @@ public class BooksService {
 
 	// 一括登録バリデーションチェック
 	public boolean checkBulkValidation(BookDetailsInfo bookInfo) {
-		if  (
-					checkRequired(bookInfo) == true || (checkIsbnDigits(bookInfo.getIsbn()) == false && bookInfo.getIsbn().matches("^[0-9]+$")) || 
-					!(checkDateValidation(bookInfo.getPublishDate()) == true && bookInfo.getPublishDate().matches("^[0-9]+$"))
-				) {
-					return true;
+		if (checkRequired(bookInfo) == true
+				|| (checkIsbnDigits(bookInfo.getIsbn()) == false && bookInfo.getIsbn().matches("^[0-9]+$")) ||
+				!(checkDateValidation(bookInfo.getPublishDate()) == true
+						&& bookInfo.getPublishDate().matches("^[0-9]+$"))) {
+			return true;
 		} else {
 			return false;
 		}
+	}
+
+	public List<BookInfo> getSearchBookList(String searchWord) {
+		List<BookInfo> getedSearchBooks = jdbcTemplate.query(
+				"SELECT * FROM books WHERE title LIKE '%" + searchWord + "%'", new BookInfoRowMapper());
+		return getedSearchBooks;
 	}
 }
