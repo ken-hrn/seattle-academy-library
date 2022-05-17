@@ -21,7 +21,11 @@
         </div>
         <div class="right">
             <ul>
-               <form action="<%=request.getContextPath()%>/searchBook" method="post" class="search_box">
+                <form action="<%=request.getContextPath()%>/searchBook" method="post" class="search_box">
+                    <input type="radio" name="searchCriteria" value="perfectMatching" id="perfectMatching" checked="checked">
+                    <label for="perfectMatching" style="width: 110px;">完全一致</label>
+                    <input type="radio" name="searchCriteria" value="partialMatching" id="partialMatching">
+                    <label for="partialMatching" style="width: 110px;">部分一致</label>
                     <input type="text" class="search1" name="searchWord" placeholder="本の検索">
                 </form>
                 <li><a href="<%=request.getContextPath()%>/home" class="menu">Home</a></li>
@@ -63,7 +67,7 @@
                             </c:forEach>
                         </c:when>
                         <c:otherwise>
-                            <div>検索結果はありません。</div>
+                            <div>条件に一致する検索結果はありません。</div>
                         </c:otherwise>
                     </c:choose>
                 </div>
