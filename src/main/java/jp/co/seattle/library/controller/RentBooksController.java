@@ -49,13 +49,7 @@ public class RentBooksController {
     } else {
       model.addAttribute("rentErrorMessage", "貸出し済みです");
 		}
-		
-		if (rentBooksService.getRentStatus(bookId) > 0) {
-				model.addAttribute("rentStatus", "貸出中");
-		} else {
-				model.addAttribute("rentStatus", "貸出可能");
-		}
-    
+	
     model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
     return "details";
 	}
