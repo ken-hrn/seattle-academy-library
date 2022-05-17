@@ -48,8 +48,8 @@ public class RentBooksController {
       rentBooksService.registBook(bookId);
     } else {
       model.addAttribute("rentErrorMessage", "貸出し済みです");
-    }
-    
+		}
+	
     model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
     return "details";
 	}

@@ -65,6 +65,18 @@ public class RentBooksService {
     String sql = "DELETE from rending_manages WHERE book_id = " + bookId;
 
 		jdbcTemplate.update(sql);
-  }
+	}
+	
+	/**
+	 * 貸出管理テーブルの本の情報を削除する
+	 * @param bookId
+	 * @return 書籍id
+	 */
+	public int getRentStatus(Integer bookId) {
+		String sql = "SELECT COUNT(rending_manages.book_id) FROM books LEFT OUTER JOIN rending_manages ON books.id = rending_manages.book_id WHERE rending_manages.book_id  = " + bookId;
+
+		int existBookId = jdbcTemplate.queryForObject(sql, Integer.class);
+    return existBookId;
+	}
   
 }

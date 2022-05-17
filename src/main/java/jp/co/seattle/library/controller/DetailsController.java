@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jp.co.seattle.library.service.BooksService;
+import jp.co.seattle.library.service.RentBooksService;
 
 /**
  * 詳細表示コントローラー
@@ -24,6 +25,9 @@ public class DetailsController {
     @Autowired
     private BooksService booksService;
 
+    @Autowired
+    private RentBooksService rentBooksService;
+
     /**
      * 詳細画面に遷移する
      * @param locale
@@ -31,6 +35,7 @@ public class DetailsController {
      * @param bookId
      * @param model
      * @return
+     * 
      */
     @Transactional
     @RequestMapping(value = "/details", method = RequestMethod.POST)

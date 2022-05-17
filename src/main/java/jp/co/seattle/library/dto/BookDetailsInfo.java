@@ -30,6 +30,8 @@ public class BookDetailsInfo {
 
     private String introduction;
 
+    private String status;
+
     public BookDetailsInfo() {
 
     }
