@@ -42,11 +42,17 @@ public class RentBooksController {
 			Locale locale,
 			@RequestParam("bookId") Integer bookId,
 			Model model) {
-    logger.info("Welcome rent! The client locale is {}.", locale);
+		logger.info("Welcome rent! The client locale is {}.", locale);
+		System.out.println(bookId);
+		if (booksService.getBookInfo(bookId).getCheckoutDate() == null) {
+			System.out.println("Ok");
+		}
 
     if (rentBooksService.getRentBookInfo(bookId) == 0) {
       rentBooksService.registBook(bookId);
-    } else {
+    } else if(booksService.getBookInfo(bookId).getCheckoutDate() == null) {
+			rentBooksService.updateCheckoutDate(bookId);
+		} else {
       model.addAttribute("rentErrorMessage", "貸出し済みです");
 		}
 	

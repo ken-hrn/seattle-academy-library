@@ -265,13 +265,13 @@ footer > .copyright {
 }
 
 ul {
-  list-style: none;
+    list-style: none;
 }
 
 h1 {
-  padding: 0.4em 0.5em;
-  color: #707070;
-  border-left: solid 5px #7db4e6;
+    padding: 0.4em 0.5em;
+    color: #707070;
+    border-left: solid 5px #7db4e6;
 }
 .error_msg {
     color: red;

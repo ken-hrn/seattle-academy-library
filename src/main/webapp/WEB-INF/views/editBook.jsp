@@ -23,7 +23,7 @@
             <div class="logo">Seattle Library</div>
         </div>
         <div class="right">
-            <ul>
+            <ul class="right-content">
                 <li><a href="<%=request.getContextPath()%>/home" class="menu">Home</a></li>
                 <li><a href="<%=request.getContextPath()%>/">ログアウト</a></li>
             </ul>
@@ -72,7 +72,7 @@
                         <input type="text" name="publisher" value="${bookDetailsInfo.publisher}">
                     </c:if>
                     <c:if test="${empty bookDetailsInfo}">
-                    
+
                         <input type="text" name="publisher">
                     </c:if>
                 </div>

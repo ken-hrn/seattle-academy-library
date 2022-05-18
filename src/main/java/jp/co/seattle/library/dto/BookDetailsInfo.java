@@ -32,6 +32,10 @@ public class BookDetailsInfo {
 
     private String status;
 
+    private String checkoutDate;
+
+    private String returnDate;
+
     public BookDetailsInfo() {
 
     }
