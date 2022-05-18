@@ -42,9 +42,14 @@
                     </tr>
                     <c:forEach var="rentBookInfo" items="${rentBookList}">
                         <tr>
-                            <th>${rentBookInfo.title}</th>
-                            <th>${rentBookInfo.checkoutDate}</th>
-                            <th>${rentBookInfo.returnDate}</th>
+                            <td>
+                                <a href="<c:url value=" details">
+                                    <c:param name="bookId" value="${rentBookInfo.bookId}" />
+                                    </c:url>">${rentBookInfo.title}
+                                </a>
+                            </td>
+                            <td>${rentBookInfo.checkoutDate}</td>
+                            <td>${rentBookInfo.returnDate}</td>
                         </tr>
                     </c:forEach>
                 </table>

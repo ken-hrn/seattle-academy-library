@@ -51,7 +51,7 @@
                         <c:when test="${!empty bookList}">
                             <c:forEach var="bookInfo" items="${bookList}">
                                 <div class="books">
-                                    <form method="post" class="book_thumnail" action="<%=request.getContextPath()%>/details">
+                                    <form method="get" class="book_thumnail" action="<%=request.getContextPath()%>/details">
                                         <a href="javascript:void(0)" onclick="this.parentNode.submit();">
                                             <c:if test="${bookInfo.thumbnail == 'null'}">
                                                 <img class="book_noimg" src="resources/img/noImg.png">
