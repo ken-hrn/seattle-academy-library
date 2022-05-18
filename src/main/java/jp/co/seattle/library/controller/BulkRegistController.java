@@ -77,26 +77,25 @@ public class BulkRegistController {
 			while ((inputValue = br.readLine()) != null) {
 				String[] inputValues = inputValue.split(",", -1);
 
+				BookDetailsInfo bookInfo = new BookDetailsInfo();
+				bookInfo.setTitle(inputValues[0]);
+				bookInfo.setAuthor(inputValues[1]);
+				bookInfo.setPublisher(inputValues[2]);
+				bookInfo.setPublishDate(inputValues[3]);
+				bookLists.add(bookInfo);
+
 				if (inputValues[4].isEmpty()) {
 					bookInfo.setIsbn("null");
 				} else {
 					bookInfo.setIsbn(inputValues[4]);
 				}
 				bookInfo.setThumbnailUrl("null");
-				
 				// 行数カウントインクリメント
 				lineCount++;
 				
 				Boolean resultValidation = booksService.checkBulkValidation(bookInfo);
-				if (resultValidation == true) {
+				if (resultValidation) {
 					errorMessages.add(lineCount + "行目でバリデーションエラーが発生しました");
-				} else {
-					BookDetailsInfo bookInfo = new BookDetailsInfo();
-					bookInfo.setTitle(inputValues[0]);
-					bookInfo.setAuthor(inputValues[1]);
-					bookInfo.setPublisher(inputValues[2]);
-					bookInfo.setPublishDate(inputValues[3]);
-					bookLists.add(bookInfo);
 				}
 
 			}
