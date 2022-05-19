@@ -21,5 +21,4 @@ public class RentBookDetailsInfoRowMapper implements RowMapper<RentBookDetailsIn
         rentBookDetailsInfo.setReturnDate(rs.getString("return_date"));
         return rentBookDetailsInfo;
     }
-
 }

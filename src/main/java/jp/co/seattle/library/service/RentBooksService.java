@@ -39,7 +39,6 @@ public class RentBooksService {
 		List<RentBookDetailsInfo> getedRentBookList = jdbcTemplate.query(
 			"SELECT books.id, title, checkout_date, return_date FROM books INNER JOIN rending_manages ON books.id = rending_manages.book_id",
 			new RentBookDetailsInfoRowMapper());
-			System.out.println(getedRentBookList);
 			return getedRentBookList;	
 		}
 
@@ -79,7 +78,6 @@ public class RentBooksService {
 	public void registReturnDate(Integer bookId) {
 
     String sql = "UPDATE rending_manages SET checkout_date = null, return_date = now() WHERE book_id = " + bookId;
-		System.out.println(sql);
 		jdbcTemplate.update(sql);
 	}
 	
@@ -102,7 +100,6 @@ public class RentBooksService {
 	 */
 	public void updateCheckoutDate(Integer bookId) {
 		String sql = "UPDATE rending_manages SET checkout_date = now(), return_date = null WHERE book_id = " + bookId;
-		System.out.println(sql);
 		jdbcTemplate.update(sql);
 	}
   

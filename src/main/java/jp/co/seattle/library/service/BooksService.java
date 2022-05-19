@@ -61,6 +61,14 @@ public class BooksService {
 		return bookDetailsInfo;
 	}
 
+
+	public boolean isCheckedOut(Integer bookId) {
+		String sql = "SELECT EXISTS(SELECT * FROM rending_manages WHERE book_id = " + bookId + "AND checkout_date IS NOT null) AS is_lend";
+
+		boolean isCheckedOut = jdbcTemplate.queryForObject(sql, Boolean.class);
+		return isCheckedOut;
+	}
+
 	/**
 	 * 書籍を登録する
 	 * @param bookInfo 書籍情報

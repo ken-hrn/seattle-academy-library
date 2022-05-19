@@ -16,7 +16,7 @@ import jp.co.seattle.library.service.BooksService;
 import jp.co.seattle.library.service.RentBooksService;
 
 /**
- * 削除コントローラー
+ * 貸出履歴コントローラー
  */
 @Controller //APIの入り口
 public class lendHistoryController {

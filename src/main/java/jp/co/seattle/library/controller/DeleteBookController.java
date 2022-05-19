@@ -44,14 +44,14 @@ public class DeleteBookController {
 			Model model) {
 		logger.info("Welcome delete! The client locale is {}.", locale);
 
-		if (booksService.getBookInfo(bookId).getCheckoutDate() == null || rentBooksService.getRentBookInfo(bookId) == 0) {
-			booksService.deleteBook(bookId);
-		} else {
+		if (booksService.isCheckedOut(bookId)) {
 			model.addAttribute("rentErrorMessage", "貸出中の本は削除できません");
 			model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 			return "details";
+		} else {
+			booksService.deleteBook(bookId);
+			return "redirect:home";
     }
-		return "redirect:home";
 	}
 
 }
