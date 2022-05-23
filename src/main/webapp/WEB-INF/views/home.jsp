@@ -11,6 +11,7 @@
 <link href="<c:url value="/resources/css/default.css" />" rel="stylesheet" type="text/css">
 <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 <link href="<c:url value="/resources/css/home.css" />" rel="stylesheet" type="text/css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
 <body class="wrapper">
@@ -20,23 +21,26 @@
             <div class="logo">Seattle Library</div>
         </div>
         <div class="right">
-            <ul>
-                <form action="<%=request.getContextPath()%>/searchBook" method="post" class="search_box">
-                    <input type="radio" name="searchCriteria" value="perfectMatching" id="perfectMatching" checked="checked">
-                    <label for="perfectMatching" style="width: 110px;">完全一致</label>
-                    <input type="radio" name="searchCriteria" value="partialMatching" id="partialMatching">
-                    <label for="partialMatching" style="width: 110px;">部分一致</label>
-                    <input type="text" class="search1" name="searchWord" placeholder="本の検索">
-                </form>
-                <li><a href="<%=request.getContextPath()%>/home" class="menu">Home</a></li>
-                <li><a href="<%=request.getContextPath()%>/">ログアウト</a></li>
+            <ul class="right-content">
+                <li><a href="<%=request.getContextPath()%>/home" class="btn btn-info">Home</a></li>
+                <li><a href="<%=request.getContextPath()%>/" class="btn btn-danger">ログアウト</a></li>
             </ul>
         </div>
     </header>
     <main>
-        <h1>Home</h1>
-        <a href="<%=request.getContextPath()%>/addBook" class="btn_add_book">書籍の追加</a>
-        <a href="<%=request.getContextPath()%>/bulkRegist" class="btn_bulkRegist">書籍の一括登録</a>
+        <div class="content_head">
+            <h1>Home</h1>
+            <form action="<%=request.getContextPath()%>/searchBook" method="post" class="search_box">
+                <input type="radio" name="searchCriteria" value="perfectMatching" id="perfectMatching" checked="checked">
+                <label for="perfectMatching" style="width: 110px;">完全一致</label>
+                <input type="radio" name="searchCriteria" value="partialMatching" id="partialMatching">
+                <label for="partialMatching" style="width: 110px;">部分一致</label>
+                <input type="text" class="search1" name="searchWord" placeholder="本の検索">
+            </form>
+        </div>
+        <a href="<%=request.getContextPath()%>/addBook" class="btn btn-primary">書籍の追加</a>
+        <a href="<%=request.getContextPath()%>/bulkRegist" class="btn btn-success">書籍の一括登録</a>
+        <a href="<%=request.getContextPath()%>/lendingHistroy" class="btn btn-warning">貸出履歴一覧</a>
         <div class="content_body">
             <c:if test="${!empty resultMessage}">
                 <div class="error_msg">${resultMessage}</div>
@@ -47,7 +51,7 @@
                         <c:when test="${!empty bookList}">
                             <c:forEach var="bookInfo" items="${bookList}">
                                 <div class="books">
-                                    <form method="post" class="book_thumnail" action="<%=request.getContextPath()%>/details">
+                                    <form method="get" class="book_thumnail" action="<%=request.getContextPath()%>/details">
                                         <a href="javascript:void(0)" onclick="this.parentNode.submit();">
                                             <c:if test="${bookInfo.thumbnail == 'null'}">
                                                 <img class="book_noimg" src="resources/img/noImg.png">

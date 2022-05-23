@@ -44,8 +44,8 @@ public class ReturnBooksController {
 			Model model) {
     logger.info("Welcome rent! The client locale is {}.", locale);
 
-    if (rentBooksService.getRentBookInfo(bookId) != 0) {
-      rentBooksService.deleteBook(bookId);
+    if (rentBooksService.getRentBookInfo(bookId) != 0 && booksService.getBookInfo(bookId).getCheckoutDate() != null) {
+      rentBooksService.registReturnDate(bookId);
     } else {
       model.addAttribute("rentErrorMessage", "貸出されていません");
     }

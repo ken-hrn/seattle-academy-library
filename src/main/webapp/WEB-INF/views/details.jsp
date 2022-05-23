@@ -24,7 +24,7 @@
             <div class="logo">Seattle Library</div>
         </div>
         <div class="right">
-            <ul>
+            <ul class="right-content">
                 <li><a href="<%=request.getContextPath()%>/home" class="menu">Home</a></li>
                 <li><a href="<%=request.getContextPath()%>/">ログアウト</a></li>
             </ul>
@@ -50,7 +50,7 @@
                 </div>
                 <div>${bookDetailsInfo.status}</div>
                 <c:if test="${!empty rentErrorMessage}">
-                    
+
                     <div class="error">
                         ${rentErrorMessage}
                     </div>

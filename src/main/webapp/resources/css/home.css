@@ -66,6 +66,10 @@ input {
 
 
 /* ここから追加 */
+.content_head {
+    display: flex !important;
+    justify-content: space-between !important;
+}
 .search_box {
     position: relative;
     margin-left: -5px;
@@ -74,7 +78,6 @@ input {
 }
 
 .search1 {
-    border-radius: 20px;
     font-size: 15px;
     width: 325px;
     padding: 4px 10px;
@@ -94,6 +97,10 @@ input {
     right: 12px;
     color: white;
     pointer-events: none;
+}
+
+.right-content {
+    display: flex;
 }
 
 .booklist {

@@ -13,8 +13,10 @@ import org.springframework.stereotype.Service;
 
 import jp.co.seattle.library.dto.BookDetailsInfo;
 import jp.co.seattle.library.dto.BookInfo;
+import jp.co.seattle.library.dto.RentBookDetailsInfo;
 import jp.co.seattle.library.rowMapper.BookDetailsInfoRowMapper;
 import jp.co.seattle.library.rowMapper.BookInfoRowMapper;
+import jp.co.seattle.library.rowMapper.RentBookDetailsInfoRowMapper;
 
 /**
  * 貸出管理サービス
@@ -27,6 +29,18 @@ public class RentBooksService {
   
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+
+	/**
+	 * 貸出管理の本の情報を取得する
+	 * @param bookId
+	 * @return 書籍id
+	 */
+  public List<RentBookDetailsInfo> getRentBookList() {
+		List<RentBookDetailsInfo> getedRentBookList = jdbcTemplate.query(
+			"SELECT books.id, title, checkout_date, return_date FROM books INNER JOIN rending_manages ON books.id = rending_manages.book_id",
+			new RentBookDetailsInfoRowMapper());
+			return getedRentBookList;	
+		}
 
 	/**
 	 * 貸出管理の本の情報を取得する
@@ -47,8 +61,9 @@ public class RentBooksService {
 	 */
 	public void registBook(Integer bookId) {
 
-		String sql = "INSERT INTO rending_manages (book_id, reg_date, upd_date) VALUES ('"
+		String sql = "INSERT INTO rending_manages (book_id, reg_date, upd_date, checkout_date) VALUES ('"
 				+ bookId + "'," 
+				+ "now(),"
 				+ "now(),"
         + "now())";
 
@@ -56,14 +71,13 @@ public class RentBooksService {
   }
 
   /**
-	 * 貸出管理テーブルの本の情報を削除する
+	 * 貸出管理テーブルに返却日を設定する
 	 * @param bookId
 	 * @return 書籍id
 	 */
-	public void deleteBook(Integer bookId) {
+	public void registReturnDate(Integer bookId) {
 
-    String sql = "DELETE from rending_manages WHERE book_id = " + bookId;
-
+    String sql = "UPDATE rending_manages SET checkout_date = null, return_date = now() WHERE book_id = " + bookId;
 		jdbcTemplate.update(sql);
 	}
 	
@@ -77,6 +91,16 @@ public class RentBooksService {
 
 		int existBookId = jdbcTemplate.queryForObject(sql, Integer.class);
     return existBookId;
+	}
+
+		/**
+		一度借りられた本の貸出日の更新
+	 * @param bookId
+	 * @return 書籍id
+	 */
+	public void updateCheckoutDate(Integer bookId) {
+		String sql = "UPDATE rending_manages SET checkout_date = now(), return_date = null WHERE book_id = " + bookId;
+		jdbcTemplate.update(sql);
 	}
   
 }

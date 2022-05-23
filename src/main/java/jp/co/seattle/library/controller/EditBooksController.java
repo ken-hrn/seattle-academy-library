@@ -3,7 +3,6 @@ package jp.co.seattle.library.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,17 +36,17 @@ public class EditBooksController {
 	 * 書籍情報を登録する
 	 * @param locale ロケール情報
 	 * @param bookId bookId
-   * @param model モデル
-   * @return 遷移先画面
+	* @param model モデル
+	* @return 遷移先画面
 	 */
 
 	@RequestMapping(value = "/editBook", method = RequestMethod.POST, produces = "text/plain;charset=utf-8") //value＝actionで指定したパラメータ
 	//RequestParamでname属性を取得
 	public String editBook(Locale locale,
-      @RequestParam("bookId") Integer bookId,
-      Model model) {
-      model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
-      return "editBook";
+			@RequestParam("bookId") Integer bookId,
+			Model model) {
+		model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
+		return "editBook";
 	}
 
 	/**
@@ -57,13 +56,13 @@ public class EditBooksController {
 	 * @param author 著者名
 	 * @param publisher 出版社
 	 * @param file サムネイルファイル
-   * @param model モデル
-   * @return 遷移先画面
+	* @param model モデル
+	* @return 遷移先画面
 	 */
-  @Transactional
+	@Transactional
 	@RequestMapping(value = "/updateBook", method = RequestMethod.POST, produces = "text/plain;charset=utf-8")
-  public String editBook(Locale locale,
-      @RequestParam("bookId") Integer bookId,
+	public String editBook(Locale locale,
+			@RequestParam("bookId") Integer bookId,
 			@RequestParam("title") String title,
 			@RequestParam("author") String author,
 			@RequestParam("publisher") String publisher,
@@ -74,8 +73,8 @@ public class EditBooksController {
 			Model model) {
 		logger.info("Welcome editBooks.java! The client locale is {}.", locale);
 		// パラメータで受け取った書籍情 報をDtoに格納する。
-    BookDetailsInfo bookInfo = new BookDetailsInfo();
-    bookInfo.setBookId(bookId);
+		BookDetailsInfo bookInfo = new BookDetailsInfo();
+		bookInfo.setBookId(bookId);
 		bookInfo.setTitle(title);
 		bookInfo.setAuthor(author);
 		bookInfo.setPublisher(publisher);
@@ -84,8 +83,7 @@ public class EditBooksController {
 		bookInfo.setIntroduction(introduction);
 
 		// クライアントのファイルシステムにある元のファイル名を設定する
-    String thumbnail = file.getOriginalFilename();
-    
+		String thumbnail = file.getOriginalFilename();
 
 		if (!file.isEmpty()) {
 			try {
@@ -102,8 +100,8 @@ public class EditBooksController {
 				model.addAttribute("bookDetailsInfo", bookInfo);
 				return "editBook";
 			}
-    }
-    
+		}
+
 		// 各バリデーションチェックのメソッド呼び出し
 		Boolean checkRequired = booksService.checkRequired(bookInfo);
 		Boolean checkIsbnResult = booksService.checkIsbnDigits(isbn);

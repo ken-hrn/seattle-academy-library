@@ -23,6 +23,10 @@ public class BookInfo {
 
     private String thumbnail;
 
+    private String checkoutDate;
+
+    private String returnDate;
+
     public BookInfo() {
 
     }
